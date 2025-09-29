@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:salon_app/components/bottom_navigationbar.dart';
-import 'package:salon_app/provider/user_provider.dart';
-
-import '../../controller/auth_controller.dart';
+import 'package:salon_app/screens/role_selection/role_selection_screen.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -17,6 +12,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   ScrollController controller = ScrollController();
   double controllerOffset = 0.0;
   int index = 0;
+  
   void move() {
     controller.animateTo(controllerOffset + 392,
         curve: Curves.easeIn, duration: const Duration(milliseconds: 500));
@@ -48,6 +44,119 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   ];
 
   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            height: 600,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xff721c80),
+                  Color.fromARGB(255, 196, 103, 169),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: ListView.builder(
+              controller: controller,
+              scrollDirection: Axis.horizontal,
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                return Stack(
+                  children: [
+                    Container(
+                      width: 392,
+                      height: 600,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            imgUrl[index],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 392,
+                      height: 600,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            const Color(0xff721c80).withOpacity(0.7),
+                            const Color.fromARGB(255, 196, 103, 169).withOpacity(0.7),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 40),
+          const Text(
+            "Professional Beauty Services",
+            style: TextStyle(
+              color: Color(0xff721c80),
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: const Text(
+              "Book appointments with top beauty professionals or grow your own beauty business from home",
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(32),
+            child: SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RoleSelectionScreen(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xff721c80),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  'Get Started',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
